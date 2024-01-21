@@ -5,8 +5,7 @@
 main(){
      int opc;
  do{
-   opc=menu();
-   _flushall();
+    opc=menu();
     switch(opc){
             case 1:
 					
