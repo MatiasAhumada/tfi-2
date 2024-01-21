@@ -6,6 +6,7 @@ main(){
      int opc;
  do{
     opc=menu();
+	_flushall();
     switch(opc){
             case 1:
 					
@@ -15,7 +16,7 @@ main(){
 					pacientes(paci,pac);
 					break;
 			case 3:
-					
+					turnos(tur,turn);
 					break;
 			case 4: 		
 					
