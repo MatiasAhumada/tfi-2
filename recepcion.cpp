@@ -12,14 +12,13 @@ main(){
 					inicioSesion(usuarios,us);
 					break;
 			case 2:
-                    
 					pacientes(paci,pac);
 					break;
 			case 3:
 					turnos(tur,turn);
 					break;
 			case 4: 		
-					
+					profesionales(profe,pro);
 					break;
 			case 5:
 					printf("\nHASTA PRONTO\n");

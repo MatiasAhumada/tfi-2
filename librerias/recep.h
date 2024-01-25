@@ -27,6 +27,12 @@ struct usuario{
     char mail[100];
     char cont[10];
 };
+struct profesional{
+    char ApeNom[60];
+    int idProfesional;
+    int Dni;
+    char telefono[25];
+};
 //MENU INICIO
 int menu(void){
     system("cls");
@@ -215,4 +221,28 @@ void turnos(FILE *tur, turno turn){
         printf("\nARCHIVO NO CREADO\n");
         printf("\nHASTA PRONTO\n");
     }
+}
+//Listado de profesionales
+FILE *profe;
+profesional pro;
+void profesionales(FILE *profe, profesional pro){
+    profe=fopen("Profesionales.dat","r+b");
+    if(profe==NULL){
+        printf("\nARCHIVO NO ENCONTRADO\n");
+        printf("\nCORROBORE LA EXISTENCIA DESDE EL PANEL DE ADMINISTRACION\n");
+    }else{
+        fread(&pro,sizeof(profesional),1,profe);
+        while(!feof(profe)){
+            printf("\nApellido y Nombre\n");
+            puts(pro.ApeNom);
+            printf("\nID de profesional\n");
+            printf("%d\n",pro.idProfesional);
+            printf("\nDNIe\n");
+            printf("%d\n", pro.Dni);
+            printf("\nTelefono de Contacto\n");
+            puts(pro.telefono);
+            fread(&pro,sizeof(profesional),1,profe);
+        }
+    }
+    fclose(profe);
 }
