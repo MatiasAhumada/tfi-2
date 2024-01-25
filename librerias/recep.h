@@ -2,6 +2,31 @@
 #include <stdio.h>
 #include <string.h>
 #include <conio.h>
+struct Fecha{
+    int dia;
+    int mes;
+    int anio;
+};
+struct paciente{
+   char ApeNom[60];
+   char Domicilio[60];
+   int DniPaciente;
+   char Localidad[60];
+   Fecha fecha;
+   char Telefono[25];
+   bool borrado;
+};
+struct turno{
+    int idProfecional;
+    Fecha fecha;
+    int DniPaciente;
+    char DetallePaciente[380];
+    bool borrado;
+};  
+struct usuario{
+    char mail[100];
+    char cont[10];
+};
 //MENU INICIO
 int menu(void){
     system("cls");
@@ -16,26 +41,38 @@ int menu(void){
     return N;
    
 }
+//Inicio de sesion
+    FILE *usuarios;
+    usuario us;
+void inicioSesion(FILE *usuarios, usuario us){
+    char mail[100], cont[10];
+    bool encontrado=false;
+    usuarios=fopen("Usuarios.dat", "a+b");
+    printf("\nIngrese usuario\n");
+    gets(mail);_flushall();
+    printf("\nIngrese contraseña\n");
+    gets(cont);_flushall();
+    fread(&us,sizeof(usuario),1,usuarios);
+    while(!feof(usuarios)){
+        if(us.mail==mail&&us.cont==cont){
+            printf("\nUSUARIO ENCONTRADO\n");
+            encontrado=true;
+            fseek(usuarios,sizeof(usuario),SEEK_END);
+        }else{
+            fread(&us,sizeof(usuario),1,usuarios);
+        }
+    }
+    if(encontrado==false){
+        printf("");
+    }
+    fclose(usuarios);
+}
 //Registro de pacientes
-struct Fecha{
-    int dia;
-    int mes;
-    int anio;
-};
 
-struct paciente{
-   char ApeNom[60];
-   char Domicilio[60];
-   int DniPaciente;
-   char Localidad[60];
-   Fecha fecha;
-   char Telefono[25];
-   bool borrado;
-};
     FILE *paci;
     paciente pac;
 void pacientes(FILE *paci,paciente pac){
-    char c;
+    char c,r;
     //_flushall();
     paci=fopen("Pacientes.dat","r+b");
     system("cls");
@@ -93,9 +130,9 @@ void pacientes(FILE *paci,paciente pac){
         };
         pac.borrado=false;
 		fwrite(&pac, sizeof(pac), 1, paci);  
-	    printf("\nDesea crear el archivo? (S/N):  \n"); 
-        c=getch();
-    }while(c=='S'||c=='s');
+	    printf("\nDesea cargar otro paciente? (S/N):  \n"); 
+        r=getch();
+    }while(r=='S'||r=='s');
 	fclose(paci); 
     }else{
         printf("\nARCHIVO NO CREADO\n");
@@ -104,13 +141,6 @@ void pacientes(FILE *paci,paciente pac){
 }
 
 //registro de turnos
-struct turno{
-    int idProfecional;
-    Fecha fecha;
-    int DniPaciente;
-    char DetallePaciente[380];
-    bool borrado;
-};  
 
     FILE *tur;
     turno turn;
@@ -121,9 +151,9 @@ void turnos(FILE *tur, turno turn){
     tur=fopen("Turnos.dat","r+b");
     if(tur==NULL){
         printf("El archivo turnos no existe");
-        printf("\nDesea crear el archivo? (1: SI / 0: NO) "); 
-         scanf("%d", &c); _flushall();
-        if(c==1){
+       printf("\nDesea crear el archivo? (S/N):  "); 
+        c=getch();
+        if(c=='s'||c=='S'){
             tur=fopen("Turnos.dat","w+b");
             printf("\nARCHIVO CREADO\n");
         }
@@ -168,9 +198,9 @@ void turnos(FILE *tur, turno turn){
         };
         turn.borrado=false;
 		fwrite(&turn, sizeof(turn), 1, tur);  
-	    printf("\nDesea crear el archivo? (1: SI / 0: NO) "); 
-        scanf("%d", &r); _flushall();
-    }while(r==1);
+	    printf("\nDesea crear el archivo? (S/N):  "); 
+        r=getch();
+    }while(r=='s'||r=='S');
 	fclose(tur); 
     }else{
         printf("\nARCHIVO NO CREADO\n");
