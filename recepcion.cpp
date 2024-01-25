@@ -9,7 +9,7 @@ main(){
 	_flushall();
     switch(opc){
             case 1:
-					
+					inicioSesion(usuarios,us);
 					break;
 			case 2:
                     

@@ -45,14 +45,20 @@ int menu(void){
     FILE *usuarios;
     usuario us;
 void inicioSesion(FILE *usuarios, usuario us){
+    system("cls");
     char mail[100], cont[10];
     bool encontrado=false;
-    usuarios=fopen("Usuarios.dat", "a+b");
-    printf("\nIngrese usuario\n");
-    gets(mail);_flushall();
-    printf("\nIngrese contraseña\n");
-    gets(cont);_flushall();
-    fread(&us,sizeof(usuario),1,usuarios);
+    usuarios=fopen("Usuarios.dat", "r+b");
+    if(usuarios==NULL){
+        printf("\nARCHIVO NO ENCONTRADO\n");
+        printf("\nCARGUE USUARIOS EN EL PANEL ADMINISTRATIVO\n");
+        
+    }else{
+        printf("\nIngrese usuario\n");
+        gets(mail);_flushall();
+        printf("\nIngrese contraseña\n");
+        gets(cont);_flushall();
+        fread(&us,sizeof(usuario),1,usuarios);
     while(!feof(usuarios)){
         if(us.mail==mail&&us.cont==cont){
             printf("\nUSUARIO ENCONTRADO\n");
@@ -66,6 +72,9 @@ void inicioSesion(FILE *usuarios, usuario us){
         printf("");
     }
     fclose(usuarios);
+    }
+    
+    
 }
 //Registro de pacientes
 
