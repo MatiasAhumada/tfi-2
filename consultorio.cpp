@@ -1,8 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+//#include <consu.h>
 
 main(){
-printf("hola mundo");
-printf("\nPene");
+    hola();
+
 }
